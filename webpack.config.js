@@ -9,7 +9,7 @@ module.exports = {
   //   mode: "production",
 
   output: {
-    path: path.resolve(__dirname, "css"),
+    path: path.resolve(__dirname, "dist"),
     filename: "[name].js",
   },
 
