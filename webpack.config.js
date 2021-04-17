@@ -21,11 +21,6 @@ module.exports = {
         use: { loader: "babel-loader" },
       },
 
-      // {
-      //     test: /\.(s[ac]|c)ss$/i,
-      //     use: ["style-loader", "css-loader", "sass-loader"]
-      // },
-
       {
         test: /\.(s[ac]|c)ss$/i,
         exclude: /node_modules/,
@@ -39,20 +34,11 @@ module.exports = {
               publicPath: "/dist",
             },
           },
-          {
-            loader: "extract-loader",
-          },
-          {
-            loader: "css-loader",
-          },
-          {
-            loader: "sass-loader",
-            // options: {
-            //   sourceMap: true,
-            // },
-          },
-
+          "extract-loader",
+          "raw-loader",
+          "resolve-url-loader",
           "postcss-loader",
+          "sass-loader",
         ],
       },
     ],
