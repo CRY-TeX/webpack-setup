@@ -1,40 +1,62 @@
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require("path");
 
 // const mode = process.env.NODE_ENV === 'production' ? 'production': 'development';
 
 module.exports = {
-    entry: "./src/js/index.js",
+  entry: "./src/js/index.js",
 
-    // mode: "development",
-    mode: "production",
+  mode: "development",
+  //   mode: "production",
 
-    output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: "[name].js",
-    },
+  output: {
+    path: path.resolve(__dirname, "css"),
+    filename: "[name].js",
+  },
 
-    plugins: [new MiniCssExtractPlugin()],
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: { loader: "babel-loader" },
+      },
 
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: { loader: 'babel-loader' }
+      // {
+      //     test: /\.(s[ac]|c)ss$/i,
+      //     use: ["style-loader", "css-loader", "sass-loader"]
+      // },
+
+      {
+        test: /\.(s[ac]|c)ss$/i,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].build.css",
+              context: "./",
+              outputPath: "/",
+              publicPath: "/dist",
             },
-
-            // {
-            //     test: /\.(s[ac]|c)ss$/i,
-            //     use: ["style-loader", "css-loader", "sass-loader"]
+          },
+          {
+            loader: "extract-loader",
+          },
+          {
+            loader: "css-loader",
+          },
+          {
+            loader: "sass-loader",
+            // options: {
+            //   sourceMap: true,
             // },
+          },
 
-            {
-                test: /\.(s[ac]|c)ss$/i,
-                use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader", "postcss-loader"]
-            }
-        ]
-    },
+          "postcss-loader",
+        ],
+      },
+    ],
+  },
 
-    devtool: 'source-map',
+  //   devtool: "source-map",
 };
